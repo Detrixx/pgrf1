@@ -119,6 +119,7 @@ public class Controller2D {
                     case KeyEvent.VK_Q -> switchMode("line");
                     case KeyEvent.VK_W -> switchMode("polygon");
                     case KeyEvent.VK_E -> chooseColor();
+                    case KeyEvent.VK_C -> clear();
                     case KeyEvent.VK_SHIFT -> straightLineMode = true;
                 }
             }
@@ -163,6 +164,13 @@ public class Controller2D {
         return x >= 0 && y >= 0 && x < panel.getWidth() && y < panel.getHeight();
     }
 
+
+    //smazání
+    private void clear(){
+        panel.repaint();
+        lines.clear();
+        redraw();
+    }
 
     //Vykreslení
     private void redraw() {

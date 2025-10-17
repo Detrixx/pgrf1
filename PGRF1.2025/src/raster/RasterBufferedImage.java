@@ -13,7 +13,6 @@ public class RasterBufferedImage implements Raster{
 
     @Override
     public void setPixel(int x, int y, int color) {
-        //todo osetrit
         image.setRGB(x, y, color);
 
     }

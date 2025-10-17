@@ -8,7 +8,6 @@ import java.awt.*;
 
 public abstract class LineRasterizer {
     protected RasterBufferedImage raster;
-    //todo vyresit barvu
     public LineRasterizer(RasterBufferedImage raster) {
         this.raster = raster;
     }
