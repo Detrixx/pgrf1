@@ -9,6 +9,10 @@ public class Polygon {
         this.points = new ArrayList<>();
     }
 
+    public Polygon(ArrayList<Point> points){
+        this.points = points;
+    }
+
 
     public void addPoint(Point p){
         points.add(p);

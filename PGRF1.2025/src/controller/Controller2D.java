@@ -1,5 +1,7 @@
 package controller;
 
+import fill.Filler;
+import fill.SeedFiller;
 import model.Line;
 import model.Point;
 import model.Polygon;
@@ -21,6 +23,7 @@ public class Controller2D {
 
     private final ArrayList<Line> lines = new ArrayList<>();
     private final Polygon polygon = new Polygon();
+    private Polygon polygonClipper = new Polygon();
 
     private Point start;
     private Point end;
@@ -29,6 +32,9 @@ public class Controller2D {
     private boolean drawLineMode = true;
     private boolean drawPolygonMode = false;
     private boolean straightLineMode = false;
+
+    private Filler filler;
+    private Point seedFillStart;
 
     public Controller2D(Panel panel) {
         this.panel = panel;
@@ -57,6 +63,10 @@ public class Controller2D {
                     } else if (drawLineMode) {
                         start = new Point(x, y);
                     }
+
+                }
+                else if(e.getButton() == MouseEvent.BUTTON3){
+                    seedFillStart = new Point(x,y);
                 }
 
                 redraw();
@@ -64,6 +74,7 @@ public class Controller2D {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                if (!SwingUtilities.isLeftMouseButton(e)) return;
                 int x = e.getX();
                 int y = e.getY();
 
@@ -174,8 +185,15 @@ public class Controller2D {
 
     //Vykreslení
     private void redraw() {
-        panel.getRaster().clear();
+        //panel.getRaster().clear();
         drawAll();
+
+        if(seedFillStart != null){
+            filler = new SeedFiller(panel.getRaster(),seedFillStart.getX(),seedFillStart.getY(),0x00ff00);
+            filler.fill();
+        }
+
+
         panel.repaint();
     }
 
