@@ -1,14 +1,12 @@
 package controller;
 
 import fill.Filler;
+import fill.ScanLineFiller;
 import fill.SeedFiller;
 import model.Line;
 import model.Point;
 import model.Polygon;
-import rasterize.LineRasterizeGraphics;
-import rasterize.LineRasterizer;
-import rasterize.LineRasterizerColorTransition;
-import rasterize.LineRasterizerTrivial;
+import rasterize.*;
 import view.Panel;
 
 import javax.swing.*;
@@ -131,6 +129,7 @@ public class Controller2D {
                     case KeyEvent.VK_W -> switchMode("polygon");
                     case KeyEvent.VK_E -> chooseColor();
                     case KeyEvent.VK_C -> clear();
+                    case KeyEvent.VK_F -> fillPolygon();
                     case KeyEvent.VK_SHIFT -> straightLineMode = true;
                 }
             }
@@ -183,6 +182,16 @@ public class Controller2D {
         redraw();
     }
 
+    private void fillPolygon() {
+        Filler filler = new ScanLineFiller(
+                new LineRasterizerTrivial(panel.getRaster()),
+                new PolygonRasterizer(new LineRasterizerTrivial(panel.getRaster())),
+                polygon
+        );
+        filler.fill();
+        panel.repaint();
+    }
+
     //Vykreslení
     private void redraw() {
         //panel.getRaster().clear();
@@ -192,6 +201,7 @@ public class Controller2D {
             filler = new SeedFiller(panel.getRaster(),seedFillStart.getX(),seedFillStart.getY(),0x00ff00);
             filler.fill();
         }
+
 
 
         panel.repaint();
@@ -204,6 +214,7 @@ public class Controller2D {
         }
 
         //polygon
+
         if (polygon.lastIndex() > 0) {
 
             for (int i = 0; i < polygon.lastIndex(); i++) {
@@ -215,7 +226,9 @@ public class Controller2D {
             Point last = polygon.getPoint(polygon.lastIndex());
             Point first = polygon.getPoint(0);
             lineRasterizer.rasterize(last, first, currentColor);
+
         }
+
 
     }
 }

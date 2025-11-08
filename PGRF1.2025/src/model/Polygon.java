@@ -25,4 +25,8 @@ public class Polygon {
     public int lastIndex() {
         return points.size() - 1;
     }
+    public int getSize() {
+        return points.size();
+    }
 }
+
