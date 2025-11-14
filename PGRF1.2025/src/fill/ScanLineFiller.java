@@ -76,14 +76,19 @@ public class ScanLineFiller implements Filler {
             // Seřadit průsečíky od min po max
             Collections.sort(intersections);
 
+
             // Spojím (obarvím) průsečíky, 0 - 1, 2 - 3, 4 - 5, 6 - 7
             for (int i = 0; i < intersections.size() - 1; i += 2) {
                 int x1 = intersections.get(i);
                 int x2 = intersections.get(i + 1);
+                Color c = Color.GREEN;
+                if(y%2 == 0){
+                    c = Color.BLUE;
+                }
                 lineRasterizer.rasterize(
                         new Point(x1, y),
                         new Point(x2, y),
-                        Color.GREEN
+                        c
                 );
             }
         }
